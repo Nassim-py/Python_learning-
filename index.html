@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Python Packaging</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🐍 Learn Python Packaging</h1>
+            <p>Create and share your own Python models like a pro!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="os_module.html">Learn OS Module →</a></li>
+                <li><a href="sockets_module.html">Learn Sockets →</a></li>
+                <li><a href="#basics">Basics</a></li>
+                <li><a href="#setup">Setup.py</a></li>
+                <li><a href="#dependencies">Dependencies</a></li>
+                <li><a href="#build">Build & Share</a></li>
+                
+                
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="basics" class="card">
+            <h2>📦 Python Packaging Basics</h2>
+            <p>Packaging lets you share your code so others can <code>pip install your-package</code></p>
+            
+            <div class="code-block">
+                <h3>Basic Project Structure</h3>
+                <pre><code>my_project/
+├── my_module.py
+├── setup.py
+└── README.md</code></pre>
+            </div>
+        </section>
+
+        <section id="setup" class="card">
+            <h2>⚙️ The setup.py File</h2>
+            <p>This is your package's recipe telling Python how to handle it.</p>
+            
+            <div class="code-block">
+                <h3>Basic setup.py Template</h3>
+                <pre><code id="setupPyCode">from setuptools import setup
+
+setup(
+    name="your-package-name",
+    version="0.1.0",
+    author="Your Name",
+    description="Your package description",
+    py_modules=["your_module"],
+    install_requires=[],  # Add dependencies here
+    python_requires='>=3.6',
+)</code></pre>
+                <button onclick="copyCode('setupPyCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="dependencies" class="card">
+            <h2>🔗 Handling Dependencies</h2>
+            <p>Learn what needs to be added to install_requires</p>
+            
+            <div class="interactive-demo">
+                <h3>Dependency Checker</h3>
+                <div class="input-group">
+                    <input type="text" id="importInput" placeholder="Enter import statement (e.g., import requests)">
+                    <button onclick="checkDependency()">Check</button>
+                </div>
+                <div id="dependencyResult" class="result"></div>
+            </div>
+        </section>
+
+        <section id="build" class="card">
+            <h2>🚀 Build & Share Your Package</h2>
+            <p>Turn your code into an installable package</p>
+            
+            <div class="steps">
+                <div class="step">
+                    <h3>1. Install build tools</h3>
+                    <code>pip install setuptools wheel build</code>
+                </div>
+                <div class="step">
+                    <h3>2. Build package</h3>
+                    <code>python -m build</code>
+                </div>
+                <div class="step">
+                    <h3>3. Install locally</h3>
+                    <code>pip install -e .</code>
+                </div>
+            </div>
+        </section>
+
+        <section class="card">
+            <h2>🎯 Try It Yourself!</h2>
+            <p>Create your first package right now:</p>
+            
+            <div class="practice-area">
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="openTab('moduleTab')">my_module.py</button>
+                    <button class="tab-btn" onclick="openTab('setupTab')">setup.py</button>
+                </div>
+                
+                <div id="moduleTab" class="tab-content active">
+                    <textarea id="moduleCode" placeholder="Write your Python code here...">def hello_world():
+    print("Hello from my first package!")
+
+if __name__ == "__main__":
+    hello_world()</textarea>
+                </div>
+                
+                <div id="setupTab" class="tab-content">
+                    <textarea id="setupCode" placeholder="Write your setup.py here...">from setuptools import setup
+
+setup(
+    name="my-first-package",
+    version="0.1.0",
+    py_modules=["my_module"],
+    entry_points={
+        'console_scripts': [
+            'my-command=my_module:hello_world',
+        ],
+    },
+)</textarea>
+                </div>
+                
+                <button onclick="simulateBuild()" class="build-btn">Simulate Build</button>
+                <div id="buildOutput" class="output"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Made with ❤️ for Python learners | Open source tutorial</p>
+        </div>
+    </footer>
+
+    <!-- External JavaScript file -->
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn File I/O - Python</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📁 Learn File I/O</h1>
+            <p>Master reading and writing files with Python!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">← Back to Main</a></li>
+                <li><a href="#basics">Basics</a></li>
+                <li><a href="#reading">Reading Files</a></li>
+                <li><a href="#writing">Writing Files</a></li>
+                <li><a href="#practice">Practice</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="basics" class="card">
+            <h2>📖 File I/O Basics</h2>
+            <p>Python makes file operations simple with built-in functions.</p>
+            
+            <div class="code-block">
+                <h3>Basic File Operations</h3>
+                <pre><code># Open a file
+file = open('filename.txt', 'mode')
+
+# Perform operations
+# ...
+
+# Always close the file!
+file.close()</code></pre>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <h3>File Modes</h3>
+                    <ul>
+                        <li><code>'r'</code> - Read (default)</li>
+                        <li><code>'w'</code> - Write (overwrites)</li>
+                        <li><code>'a'</code> - Append</li>
+                        <li><code>'x'</code> - Exclusive creation</li>
+                        <li><code>'b'</code> - Binary mode</li>
+                        <li><code>'t'</code> - Text mode (default)</li>
+                        <li><code>'+'</code> - Read and write</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="reading" class="card">
+            <h2>📖 Reading Files</h2>
+            <p>Different ways to read content from files.</p>
+            
+            <div class="code-block">
+                <h3>Reading Entire File</h3>
+                <pre><code id="readEntireCode"># Method 1: Using read()
+with open('example.txt', 'r') as file:
+    content = file.read()
+    print(content)
+
+# Method 2: Using readlines()
+with open('example.txt', 'r') as file:
+    lines = file.readlines()
+    for line in lines:
+        print(line.strip())</code></pre>
+                <button onclick="copyCode('readEntireCode')">Copy Code</button>
+            </div>
+
+            <div class="code-block">
+                <h3>Reading Line by Line</h3>
+                <pre><code id="readLineCode"># Method 1: Using for loop (memory efficient)
+with open('example.txt', 'r') as file:
+    for line in file:
+        print(line.strip())
+
+# Method 2: Using readline()
+with open('example.txt', 'r') as file:
+    line = file.readline()
+    while line:
+        print(line.strip())
+        line = file.readline()</code></pre>
+                <button onclick="copyCode('readLineCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="writing" class="card">
+            <h2>✍️ Writing Files</h2>
+            <p>Different ways to write content to files.</p>
+            
+            <div class="code-block">
+                <h3>Writing to Files</h3>
+                <pre><code id="writeCode"># Method 1: write() - overwrites file
+with open('output.txt', 'w') as file:
+    file.write("Hello, World!\n")
+    file.write("This is a new line.\n")
+
+# Method 2: writelines() - writes list of lines
+lines = ["Line 1\n", "Line 2\n", "Line 3\n"]
+with open('output.txt', 'w') as file:
+    file.writelines(lines)
+
+# Method 3: Append mode
+with open('output.txt', 'a') as file:
+    file.write("This line is appended!\n")</code></pre>
+                <button onclick="copyCode('writeCode')">Copy Code</button>
+            </div>
+
+            <div class="code-block">
+                <h3>Working with CSV Files</h3>
+                <pre><code id="csvCode">import csv
+
+# Writing to CSV
+with open('data.csv', 'w', newline='') as file:
+    writer = csv.writer(file)
+    writer.writerow(['Name', 'Age', 'City'])
+    writer.writerow(['Alice', '25', 'New York'])
+    writer.writerow(['Bob', '30', 'London'])
+
+# Reading from CSV
+with open('data.csv', 'r') as file:
+    reader = csv.reader(file)
+    for row in reader:
+        print(row)</code></pre>
+                <button onclick="copyCode('csvCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="practice" class="card">
+            <h2>🎯 File I/O Practice</h2>
+            <p>Try writing your own file operations:</p>
+            
+            <div class="practice-area">
+                <textarea id="fileIoCode" placeholder="Write your file I/O code here..." rows="15"># Practice file operations
+def read_and_process_file(filename):
+    try:
+        with open(filename, 'r') as file:
+            content = file.read()
+            print(f"File content:\n{content}")
+            
+            # Count lines
+            lines = content.split('\n')
+            print(f"Total lines: {len(lines)}")
+            
+    except FileNotFoundError:
+        print(f"Error: File '{filename}' not found!")
+    except Exception as e:
+        print(f"Error: {e}")
+
+def write_to_file(filename, content):
+    try:
+        with open(filename, 'w') as file:
+            file.write(content)
+        print(f"Successfully wrote to '{filename}'")
+    except Exception as e:
+        print(f"Error writing file: {e}")
+
+# Test the functions
+if __name__ == "__main__":
+    write_to_file('test.txt', 'Hello File I/O!\nSecond line\nThird line')
+    read_and_process_file('test.txt')</textarea>
+                
+                <button onclick="runFileIoCode()" class="build-btn">Run Code Simulation</button>
+                <div id="fileIoOutput" class="output"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Made with ❤️ for Python learners | File I/O Tutorial</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            navigator.clipboard.writeText(codeElement.textContent);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✓ Copied!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        function runFileIoCode() {
+            const code = document.getElementById('fileIoCode').value;
+            const outputDiv = document.getElementById('fileIoOutput');
+            
+            outputDiv.innerHTML = '🚀 Running file I/O simulation...\n\n';
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '✅ Creating file: test.txt\n';
+                outputDiv.innerHTML += '📝 Writing content to file...\n';
+            }, 500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '✅ File written successfully\n';
+                outputDiv.innerHTML += '📖 Reading file content...\n\n';
+            }, 1500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'File content:\n';
+                outputDiv.innerHTML += 'Hello File I/O!\n';
+                outputOutputDiv.innerHTML += 'Second line\n';
+                outputDiv.innerHTML += 'Third line\n\n';
+                outputDiv.innerHTML += 'Total lines: 3\n';
+            }, 2500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '\n💡 Try modifying the code to:\n';
+                outputDiv.innerHTML += '   - Read a different file\n';
+                outputDiv.innerHTML += '   - Append to an existing file\n';
+                outputDiv.innerHTML += '   - Handle file not found errors\n';
+            }, 3500);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

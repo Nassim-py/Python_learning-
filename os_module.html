@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn OS Module - Python</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>💻 Learn OS Module</h1>
+            <p>Interact with the operating system using Python's OS module!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">← Back to Packaging</a></li>
+                <li><a href="#basics">OS Basics</a></li>
+                <li><a href="#files">File Operations</a></li>
+                <li><a href="#directories">Directory Operations</a></li>
+                <li><a href="#system">System Info</a></li>
+                <li><a href="#practice">Practice</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="basics" class="card">
+            <h2>📁 OS Module Basics</h2>
+            <p>The OS module provides a way to interact with the operating system.</p>
+            
+            <div class="code-block">
+                <h3>Basic OS Import</h3>
+                <pre><code>import os</code></pre>
+                <button onclick="copyCode('osImport')">Copy Code</button>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <h3>Common OS Module Categories</h3>
+                    <ul>
+                        <li>📂 File and directory operations</li>
+                        <li>💻 Process management</li>
+                        <li>🌐 Environment variables</li>
+                        <li>🖥️ System information</li>
+                        <li>🛣️ Path operations (use <code>os.path</code>)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="files" class="card">
+            <h2>📄 File Operations with OS Module</h2>
+            <p>Work with files and get file information.</p>
+            
+            <div class="code-block">
+                <h3>File Operations Examples</h3>
+                <pre><code id="fileOpsCode">import os
+
+# Get current working directory
+current_dir = os.getcwd()
+print(f"Current directory: {current_dir}")
+
+# Check if file exists
+file_path = "example.txt"
+if os.path.exists(file_path):
+    print(f"{file_path} exists!")
+    
+    # Get file size
+    file_size = os.path.getsize(file_path)
+    print(f"File size: {file_size} bytes")
+    
+    # Get file modification time
+    mod_time = os.path.getmtime(file_path)
+    print(f"Last modified: {mod_time}")
+    
+    # Get file absolute path
+    abs_path = os.path.abspath(file_path)
+    print(f"Absolute path: {abs_path}")
+else:
+    print(f"{file_path} does not exist")
+
+# Rename a file
+if os.path.exists("old_name.txt"):
+    os.rename("old_name.txt", "new_name.txt")
+
+# Remove a file
+if os.path.exists("file_to_delete.txt"):
+    os.remove("file_to_delete.txt")</code></pre>
+                <button onclick="copyCode('fileOpsCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="directories" class="card">
+            <h2>📂 Directory Operations</h2>
+            <p>Create, list, and navigate directories.</p>
+            
+            <div class="code-block">
+                <h3>Directory Operations Examples</h3>
+                <pre><code id="dirOpsCode">import os
+
+# List files in current directory
+print("Files in current directory:")
+for item in os.listdir('.'):
+    print(f"  {item}")
+
+# Create a new directory
+new_dir = "my_new_directory"
+if not os.path.exists(new_dir):
+    os.makedirs(new_dir)
+    print(f"Created directory: {new_dir}")
+
+# List files with full path
+print("\nFiles with full path:")
+for item in os.listdir('.'):
+    full_path = os.path.join(os.getcwd(), item)
+    print(f"  {full_path}")
+
+# Walk through directory tree
+print("\nDirectory tree:")
+for root, dirs, files in os.walk('.'):
+    level = root.replace('.', '').count(os.sep)
+    indent = ' ' * 2 * level
+    print(f"{indent}{os.path.basename(root)}/")
+    sub_indent = ' ' * 2 * (level + 1)
+    for file in files:
+        print(f"{sub_indent}{file}")
+
+# Change directory
+os.chdir('..')
+print(f"\nMoved to parent directory: {os.getcwd()}")</code></pre>
+                <button onclick="copyCode('dirOpsCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="system" class="card">
+            <h2>🖥️ System Information & Environment</h2>
+            <p>Get system info and work with environment variables.</p>
+            
+            <div class="code-block">
+                <h3>System & Environment Examples</h3>
+                <pre><code id="systemCode">import os
+
+# Get operating system name
+print(f"OS name: {os.name}")
+
+# Get system environment variables
+print("\nEnvironment variables:")
+print(f"USER: {os.environ.get('USER', 'Not set')}")
+print(f"HOME: {os.environ.get('HOME', 'Not set')}")
+print(f"PATH: {os.environ.get('PATH', 'Not set')}")
+
+# Set environment variable (for current process)
+os.environ['MY_VAR'] = 'my_value'
+print(f"\nSet MY_VAR to: {os.environ.get('MY_VAR')}")
+
+# Get process ID
+print(f"\nCurrent process ID: {os.getpid()}")
+print(f"Parent process ID: {os.getppid()}")
+
+# Execute system commands
+print("\nSystem command execution:")
+return_code = os.system('echo "Hello from system command!"')
+print(f"Command return code: {return_code}")
+
+# Platform information
+import platform
+print(f"\nPlatform: {platform.system()} {platform.release()}")
+print(f"Python version: {platform.python_version()}")</code></pre>
+                <button onclick="copyCode('systemCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="practice" class="card">
+            <h2>🎯 OS Module Practice Area</h2>
+            <p>Try writing your own OS module code:</p>
+            
+            <div class="practice-area">
+                <textarea id="osCode" placeholder="Write your OS module code here..." rows="15">import os
+
+# Your OS module practice code here
+
+def explore_directory(path='.'):
+    """Explore a directory and print its contents"""
+    if not os.path.exists(path):
+        print(f"Path '{path}' does not exist!")
+        return
+    
+    print(f"Exploring: {os.path.abspath(path)}")
+    print("\nContents:")
+    
+    for item in os.listdir(path):
+        full_path = os.path.join(path, item)
+        if os.path.isfile(full_path):
+            print(f"📄 {item} (file)")
+        elif os.path.isdir(full_path):
+            print(f"📂 {item} (directory)")
+        else:
+            print(f"❓ {item} (other)")
+
+if __name__ == "__main__":
+    explore_directory()</textarea>
+                
+                <button onclick="runOsCode()" class="build-btn">Run Code Simulation</button>
+                <div id="osOutput" class="output"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Made with ❤️ for Python learners | OS Module Tutorial</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            navigator.clipboard.writeText(codeElement.textContent);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✓ Copied!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        function runOsCode() {
+            const code = document.getElementById('osCode').value;
+            const outputDiv = document.getElementById('osOutput');
+            
+            outputDiv.innerHTML = '🚀 Running OS module code simulation...\n\n';
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '✅ OS module imported successfully\n';
+                outputDiv.innerHTML += '📁 Exploring current directory\n';
+            }, 500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '📄 example.py (file)\n';
+                outputDiv.innerHTML += '📂 src/ (directory)\n';
+                outputDiv.innerHTML += '📄 README.md (file)\n';
+                outputDiv.innerHTML += '📂 data/ (directory)\n';
+                outputDiv.innerHTML += '📄 requirements.txt (file)\n';
+            }, 1500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '\n💡 Try modifying the code to:\n';
+                outputDiv.innerHTML += '   - List files in a specific directory\n';
+                outputDiv.innerHTML += '   - Check if a file exists\n';
+                outputDiv.innerHTML += '   - Get file information (size, modification time)\n';
+            }, 2500);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

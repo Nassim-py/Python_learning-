@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Socket Programming - Python</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🔌 Learn Socket Programming</h1>
+            <p>Master network communication with Python sockets!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">← Back to Packaging</a></li>
+                <li><a href="#basics">Socket Basics</a></li>
+                <li><a href="#tcp">TCP Server/Client</a></li>
+                <li><a href="#udp">UDP Examples</a></li>
+                <li><a href="#practice">Practice</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="basics" class="card">
+            <h2>📡 Socket Programming Basics</h2>
+            <p>Sockets allow communication between processes on the same or different machines.</p>
+            
+            <div class="code-block">
+                <h3>Basic Socket Import</h3>
+                <pre><code>import socket</code></pre>
+                <button onclick="copyCode('socketImport')">Copy Code</button>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <h3>Common Socket Methods</h3>
+                    <ul>
+                        <li><code>socket.socket()</code> - Create a new socket</li>
+                        <li><code>bind((host, port))</code> - Bind to address</li>
+                        <li><code>listen()</code> - Listen for connections</li>
+                        <li><code>accept()</code> - Accept a connection</li>
+                        <li><code>connect()</code> - Connect to a server</li>
+                        <li><code>send()</code> / <code>recv()</code> - Send/receive data</li>
+                        <li><code>close()</code> - Close the socket</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="tcp" class="card">
+            <h2>🔗 TCP Socket Examples</h2>
+            <p>TCP provides reliable, connection-oriented communication.</p>
+            
+            <div class="code-block">
+                <h3>Simple TCP Server</h3>
+                <pre><code id="tcpServerCode">import socket
+
+def start_tcp_server(host='127.0.0.1', port=12345):
+    # Create TCP socket
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    server_socket.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    
+    # Bind and listen
+    server_socket.bind((host, port))
+    server_socket.listen(5)
+    print(f"Server listening on {host}:{port}")
+    
+    try:
+        while True:
+            # Accept connection
+            client_socket, client_address = server_socket.accept()
+            print(f"Connection from {client_address}")
+            
+            # Receive and send data
+            data = client_socket.recv(1024).decode()
+            print(f"Received: {data}")
+            
+            response = f"Server received: {data}"
+            client_socket.send(response.encode())
+            
+            # Close client connection
+            client_socket.close()
+            
+    except KeyboardInterrupt:
+        print("Server shutting down...")
+    finally:
+        server_socket.close()
+
+if __name__ == "__main__":
+    start_tcp_server()</code></pre>
+                <button onclick="copyCode('tcpServerCode')">Copy Code</button>
+            </div>
+
+            <div class="code-block">
+                <h3>Simple TCP Client</h3>
+                <pre><code id="tcpClientCode">import socket
+
+def start_tcp_client(host='127.0.0.1', port=12345):
+    # Create TCP socket
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    
+    try:
+        # Connect to server
+        client_socket.connect((host, port))
+        print(f"Connected to {host}:{port}")
+        
+        # Send message
+        message = "Hello, Server!"
+        client_socket.send(message.encode())
+        
+        # Receive response
+        response = client_socket.recv(1024).decode()
+        print(f"Server response: {response}")
+        
+    except ConnectionRefusedError:
+        print("Could not connect to server. Is it running?")
+    finally:
+        client_socket.close()
+
+if __name__ == "__main__":
+    start_tcp_client()</code></pre>
+                <button onclick="copyCode('tcpClientCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="udp" class="card">
+            <h2>📨 UDP Socket Examples</h2>
+            <p>UDP provides connectionless, faster but unreliable communication.</p>
+            
+            <div class="code-block">
+                <h3>Simple UDP Server</h3>
+                <pre><code id="udpServerCode">import socket
+
+def start_udp_server(host='127.0.0.1', port=12346):
+    # Create UDP socket
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    server_socket.bind((host, port))
+    print(f"UDP Server listening on {host}:{port}")
+    
+    try:
+        while True:
+            # Receive data
+            data, client_address = server_socket.recvfrom(1024)
+            print(f"Received from {client_address}: {data.decode()}")
+            
+            # Send response
+            response = f"UDP Server received your message!"
+            server_socket.sendto(response.encode(), client_address)
+            
+    except KeyboardInterrupt:
+        print("UDP Server shutting down...")
+    finally:
+        server_socket.close()
+
+if __name__ == "__main__":
+    start_udp_server()</code></pre>
+                <button onclick="copyCode('udpServerCode')">Copy Code</button>
+            </div>
+
+            <div class="code-block">
+                <h3>Simple UDP Client</h3>
+                <pre><code id="udpClientCode">import socket
+
+def start_udp_client(host='127.0.0.1', port=12346):
+    # Create UDP socket
+    client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    
+    try:
+        # Send message
+        message = "Hello, UDP Server!"
+        client_socket.sendto(message.encode(), (host, port))
+        print(f"Sent message to {host}:{port}")
+        
+        # Receive response (with timeout)
+        client_socket.settimeout(5.0)
+        response, server_address = client_socket.recvfrom(1024)
+        print(f"Received from {server_address}: {response.decode()}")
+        
+    except socket.timeout:
+        print("No response received - UDP is connectionless!")
+    finally:
+        client_socket.close()
+
+if __name__ == "__main__":
+    start_udp_client()</code></pre>
+                <button onclick="copyCode('udpClientCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="practice" class="card">
+            <h2>🎯 Socket Practice Area</h2>
+            <p>Try writing your own socket code:</p>
+            
+            <div class="practice-area">
+                <textarea id="socketCode" placeholder="Write your socket code here..." rows="15">import socket
+
+# Your socket code here
+# Try creating a simple server or client
+
+def simple_client():
+    client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        client.connect(('127.0.0.1', 8080))
+        client.send(b'Hello from practice client!')
+        response = client.recv(1024)
+        print(f"Received: {response.decode()}")
+    except Exception as e:
+        print(f"Error: {e}")
+    finally:
+        client.close()
+
+if __name__ == "__main__":
+    simple_client()</textarea>
+                
+                <button onclick="runSocketCode()" class="build-btn">Run Code Simulation</button>
+                <div id="socketOutput" class="output"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Made with ❤️ for Python learners | Socket Programming Tutorial</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            navigator.clipboard.writeText(codeElement.textContent);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✓ Copied!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        function runSocketCode() {
+            const code = document.getElementById('socketCode').value;
+            const outputDiv = document.getElementById('socketOutput');
+            
+            outputDiv.innerHTML = '🚀 Running socket code simulation...\n\n';
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '✅ Socket created successfully\n';
+                outputDiv.innerHTML += '🔗 Attempting connection to 127.0.0.1:8080\n';
+            }, 500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '❌ Connection failed: No server listening on port 8080\n';
+                outputDiv.innerHTML += '💡 Tip: Start a server first using one of the examples above!\n';
+                outputDiv.innerHTML += '💡 Try: Run the TCP server in one terminal and client in another\n';
+            }, 1500);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

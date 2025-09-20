@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn JSON - Python</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📊 Learn JSON with Python</h1>
+            <p>Work with JSON data, lists, and dictionaries!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">← Back to Main</a></li>
+                <li><a href="#basics">JSON Basics</a></li>
+                <li><a href="#conversion">Data Conversion</a></li>
+                <li><a href="#files">JSON Files</a></li>
+                <li><a href="#practice">Practice</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="basics" class="card">
+            <h2>📋 JSON Basics</h2>
+            <p>JSON (JavaScript Object Notation) is perfect for data exchange.</p>
+            
+            <div class="code-block">
+                <h3>Basic JSON Import</h3>
+                <pre><code>import json</code></pre>
+            </div>
+
+            <div class="steps">
+                <div class="step">
+                    <h3>Python ↔ JSON Conversion</h3>
+                    <ul>
+                        <li><strong>Python → JSON:</strong> <code>json.dumps()</code></li>
+                        <li><strong>JSON → Python:</strong> <code>json.loads()</code></li>
+                        <li><strong>Python → File:</strong> <code>json.dump()</code></li>
+                        <li><strong>File → Python:</strong> <code>json.load()</code></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="conversion" class="card">
+            <h2>🔄 Data Conversion</h2>
+            <p>Convert between Python objects and JSON strings.</p>
+            
+            <div class="code-block">
+                <h3>Python to JSON (Serialization)</h3>
+                <pre><code id="toJsonCode">import json
+
+# Python dictionary
+person = {
+    "name": "Alice",
+    "age": 30,
+    "city": "New York",
+    "hobbies": ["reading", "hiking", "coding"],
+    "is_student": False
+}
+
+# Convert to JSON string
+json_string = json.dumps(person, indent=2)
+print("JSON String:")
+print(json_string)
+
+# Convert with sorting
+json_sorted = json.dumps(person, indent=2, sort_keys=True)
+print("\nSorted JSON:")
+print(json_sorted)</code></pre>
+                <button onclick="copyCode('toJsonCode')">Copy Code</button>
+            </div>
+
+            <div class="code-block">
+                <h3>JSON to Python (Deserialization)</h3>
+                <pre><code id="fromJsonCode">import json
+
+# JSON string
+json_data = '''
+{
+    "name": "Bob",
+    "age": 25,
+    "city": "London",
+    "hobbies": ["music", "travel"],
+    "is_student": true
+}
+'''
+
+# Convert to Python object
+python_obj = json.loads(json_data)
+print("Python Object:")
+print(python_obj)
+print(f"Type: {type(python_obj)}")
+
+# Access data
+print(f"\nName: {python_obj['name']}")
+print(f"Age: {python_obj['age']}")
+print(f"Hobbies: {python_obj['hobbies']}")
+print(f"First hobby: {python_obj['hobbies'][0]}")</code></pre>
+                <button onclick="copyCode('fromJsonCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="files" class="card">
+            <h2>📁 Working with JSON Files</h2>
+            <p>Read and write JSON data to files.</p>
+            
+            <div class="code-block">
+                <h3>Writing JSON to File</h3>
+                <pre><code id="writeJsonCode">import json
+
+# Sample data
+data = {
+    "users": [
+        {"id": 1, "name": "Alice", "email": "alice@example.com"},
+        {"id": 2, "name": "Bob", "email": "bob@example.com"},
+        {"id": 3, "name": "Charlie", "email": "charlie@example.com"}
+    ],
+    "settings": {
+        "theme": "dark",
+        "notifications": true,
+        "language": "en"
+    }
+}
+
+# Write to file
+with open('data.json', 'w') as file:
+    json.dump(data, file, indent=2)
+
+print("Data written to data.json")</code></pre>
+                <button onclick="copyCode('writeJsonCode')">Copy Code</button>
+            </div>
+
+            <div class="code-block">
+                <h3>Reading JSON from File</h3>
+                <pre><code id="readJsonCode">import json
+
+# Read from file
+try:
+    with open('data.json', 'r') as file:
+        data = json.load(file)
+    
+    print("Data loaded from file:")
+    print(json.dumps(data, indent=2))
+    
+    # Access specific data
+    print(f"\nTotal users: {len(data['users'])}")
+    for user in data['users']:
+        print(f"User: {user['name']} (ID: {user['id']})")
+        
+except FileNotFoundError:
+    print("Error: data.json file not found!")
+except json.JSONDecodeError:
+    print("Error: Invalid JSON format!")
+except Exception as e:
+    print(f"Error: {e}")</code></pre>
+                <button onclick="copyCode('readJsonCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="practice" class="card">
+            <h2>🎯 JSON Practice</h2>
+            <p>Try working with JSON data:</p>
+            
+            <div class="practice-area">
+                <textarea id="jsonCode" placeholder="Write your JSON code here..." rows="15">import json
+
+# Practice JSON operations
+def create_user_data():
+    """Create sample user data"""
+    users = [
+        {"id": 1, "name": "John", "age": 28, "active": True},
+        {"id": 2, "name": "Sarah", "age": 32, "active": False},
+        {"id": 3, "name": "Mike", "age": 25, "active": True}
+    ]
+    return {"users": users, "total": len(users)}
+
+def process_json_data():
+    """Process JSON data"""
+    data = create_user_data()
+    
+    # Convert to JSON string
+    json_str = json.dumps(data, indent=2)
+    print("JSON String:")
+    print(json_str)
+    
+    # Convert back to Python
+    python_data = json.loads(json_str)
+    print(f"\nActive users:")
+    for user in python_data['users']:
+        if user['active']:
+            print(f"  - {user['name']} (Age: {user['age']})")
+
+if __name__ == "__main__":
+    process_json_data()</textarea>
+                
+                <button onclick="runJsonCode()" class="build-btn">Run Code Simulation</button>
+                <div id="jsonOutput" class="output"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Made with ❤️ for Python learners | JSON Tutorial</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            navigator.clipboard.writeText(codeElement.textContent);
+            
+            const button = event.target;
+            const originalText = button.textContent;
+            button.textContent = '✓ Copied!';
+            setTimeout(() => {
+                button.textContent = originalText;
+            }, 2000);
+        }
+
+        function runJsonCode() {
+            const code = document.getElementById('jsonCode').value;
+            const outputDiv = document.getElementById('jsonOutput');
+            
+            outputDiv.innerHTML = '🚀 Running JSON simulation...\n\n';
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '✅ Creating user data...\n';
+                outputDiv.innerHTML += '📊 Converting to JSON string...\n\n';
+            }, 500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'JSON String:\n';
+                outputDiv.innerHTML += '{\n';
+                outputDiv.innerHTML += '  "users": [\n';
+                outputDiv.innerHTML += '    {"id": 1, "name": "John", "age": 28, "active": true},\n';
+                outputDiv.innerHTML += '    {"id": 2, "name": "Sarah", "age": 32, "active": false},\n';
+                outputDiv.innerHTML += '    {"id": 3, "name": "Mike", "age": 25, "active": true}\n';
+                outputDiv.innerHTML += '  ],\n';
+                outputDiv.innerHTML += '  "total": 3\n';
+                outputDiv.innerHTML += '}\n\n';
+            }, 1500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'Active users:\n';
+                outputDiv.innerHTML += '  - John (Age: 28)\n';
+                outputDiv.innerHTML += '  - Mike (Age: 25)\n';
+            }, 2500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '\n💡 Try modifying the code to:\n';
+                outputDiv.innerHTML += '   - Add more user data\n';
+                outputDiv.innerHTML += '   - Filter by age or other criteria\n';
+                outputDiv.innerHTML += '   - Write JSON to a file and read it back\n';
+            }, 3500);
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    document.querySelector(targetId).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
