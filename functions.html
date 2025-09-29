@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Functions - Python</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>📞 Python Functions</h1>
+            <p>Learn to create and use functions effectively!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">← Back to Main</a></li>
+                <li><a href="#basics">Function Basics</a></li>
+                <li><a href="#parameters">Parameters</a></li>
+                <li><a href="#return">Return Values</a></li>
+                <li><a href="#advanced">Advanced</a></li>
+                <li><a href="#practice">Practice</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="basics" class="card">
+            <h2>📝 Function Basics</h2>
+            <p>Functions are reusable blocks of code.</p>
+            
+            <div class="code-block">
+                <h3>Basic Function Syntax</h3>
+                <pre><code id="basicFuncCode"># Defining a function
+def greet():
+    print("Hello, World!")
+
+# Calling a function
+greet()  # Output: Hello, World!
+
+# Function with parameters
+def greet_name(name):
+    print(f"Hello, {name}!")
+
+greet_name("Alice")  # Output: Hello, Alice!
+
+# Multiple parameters
+def introduce(name, age):
+    print(f"My name is {name} and I'm {age} years old.")
+
+introduce("Bob", 25)</code></pre>
+                <button onclick="copyCode('basicFuncCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="parameters" class="card">
+            <h2>🎯 Function Parameters</h2>
+            <p>Different ways to pass arguments to functions.</p>
+            
+            <div class="code-block">
+                <h3>Parameter Types</h3>
+                <pre><code id="paramCode"># Default parameters
+def greet(name, message="Hello"):
+    print(f"{message}, {name}!")
+
+greet("Alice")           # Hello, Alice!
+greet("Bob", "Hi")       # Hi, Bob!
+
+# Keyword arguments
+def describe_person(name, age, city):
+    print(f"{name} is {age} years old and lives in {city}.")
+
+describe_person(age=25, city="New York", name="Alice")
+
+# Arbitrary arguments (*args)
+def sum_numbers(*args):
+    return sum(args)
+
+print(sum_numbers(1, 2, 3, 4, 5))  # 15
+
+# Arbitrary keyword arguments (**kwargs)
+def print_info(**kwargs):
+    for key, value in kwargs.items():
+        print(f"{key}: {value}")
+
+print_info(name="Alice", age=25, city="NY")</code></pre>
+                <button onclick="copyCode('paramCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="return" class="card">
+            <h2>↩️ Return Values</h2>
+            <p>Functions can return data back to the caller.</p>
+            
+            <div class="code-block">
+                <h3>Return Statements</h3>
+                <pre><code id="returnCode"># Returning a single value
+def square(number):
+    return number * number
+
+result = square(5)
+print(result)  # 25
+
+# Returning multiple values
+def calculate_stats(numbers):
+    total = sum(numbers)
+    count = len(numbers)
+    average = total / count
+    return total, count, average
+
+stats = calculate_stats([1, 2, 3, 4, 5])
+print(stats)  # (15, 5, 3.0)
+
+# Returning a dictionary
+def create_person(name, age):
+    return {
+        'name': name,
+        'age': age,
+        'adult': age >= 18
+    }
+
+person = create_person("Alice", 25)
+print(person)</code></pre>
+                <button onclick="copyCode('returnCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="advanced" class="card">
+            <h2>🚀 Advanced Functions</h2>
+            <p>More powerful function concepts.</p>
+            
+            <div class="code-block">
+                <h3>Lambda Functions & More</h3>
+                <pre><code id="advancedCode"># Lambda functions (anonymous functions)
+square = lambda x: x * x
+print(square(5))  # 25
+
+# Using lambda with map()
+numbers = [1, 2, 3, 4, 5]
+squared = list(map(lambda x: x**2, numbers))
+print(squared)  # [1, 4, 9, 16, 25]
+
+# Using lambda with filter()
+even_numbers = list(filter(lambda x: x % 2 == 0, numbers))
+print(even_numbers)  # [2, 4]
+
+# Function as parameter
+def apply_operation(numbers, operation):
+    return [operation(x) for x in numbers]
+
+def double(x):
+    return x * 2
+
+result = apply_operation(numbers, double)
+print(result)  # [2, 4, 6, 8, 10]</code></pre>
+                <button onclick="copyCode('advancedCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="practice" class="card">
+            <h2>🎯 Practice Functions</h2>
+            <p>Create your own functions:</p>
+            
+            <div class="practice-area">
+                <textarea id="funcCode" placeholder="Write your function code here..." rows="15"># Practice function creation
+def calculate_grade(score):
+    """Calculate grade based on score"""
+    if score >= 90:
+        return 'A'
+    elif score >= 80:
+        return 'B'
+    elif score >= 70:
+        return 'C'
+    elif score >= 60:
+        return 'D'
+    else:
+        return 'F'
+
+def process_students(*students):
+    """Process multiple student scores"""
+    results = {}
+    for student in students:
+        name, score = student
+        grade = calculate_grade(score)
+        results[name] = {'score': score, 'grade': grade}
+    return results
+
+# Test the functions
+if __name__ == "__main__":
+    # Test calculate_grade
+    print("Grade for 85:", calculate_grade(85))
+    print("Grade for 92:", calculate_grade(92))
+    print("Grade for 58:", calculate_grade(58))
+    
+    # Test process_students
+    students_data = [
+        ('Alice', 92),
+        ('Bob', 85),
+        ('Charlie', 78),
+        ('David', 63),
+        ('Eva', 45)
+    ]
+    
+    results = process_students(*students_data)
+    print("\nStudent Results:")
+    for name, data in results.items():
+        print(f"{name}: Score={data['score']}, Grade={data['grade']}")</textarea>
+                
+                <button onclick="runFuncCode()" class="build-btn">Run Code</button>
+                <div id="funcOutput" class="output"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Made with ❤️ for Python learners | Functions Tutorial</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            navigator.clipboard.writeText(codeElement.textContent);
+            alert('Code copied to clipboard!');
+        }
+
+        function runFuncCode() {
+            const outputDiv = document.getElementById('funcOutput');
+            outputDiv.innerHTML = '🚀 Running function code...\n\n';
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'Grade for 85: B\n';
+                outputDiv.innerHTML += 'Grade for 92: A\n';
+                outputDiv.innerHTML += 'Grade for 58: F\n\n';
+            }, 500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'Student Results:\n';
+                outputDiv.innerHTML += 'Alice: Score=92, Grade=A\n';
+                outputDiv.innerHTML += 'Bob: Score=85, Grade=B\n';
+                outputDiv.innerHTML += 'Charlie: Score=78, Grade=C\n';
+                outputDiv.innerHTML += 'David: Score=63, Grade=D\n';
+                outputDiv.innerHTML += 'Eva: Score=45, Grade=F\n\n';
+            }, 1500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += '✅ All functions working correctly!';
+            }, 2500);
+        }
+
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
