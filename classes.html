@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Classes - Python</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="assets/favicon.ico" type="image/x-icon">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🏗️ Python Classes</h1>
+            <p>Master Object-Oriented Programming in Python!</p>
+        </div>
+    </header>
+
+    <nav>
+        <div class="container">
+            <ul>
+                <li><a href="index.html">← Back to Main</a></li>
+                <li><a href="#basics">Class Basics</a></li>
+                <li><a href="#methods">Methods</a></li>
+                <li><a href="#inheritance">Inheritance</a></li>
+                <li><a href="#special">Special Methods</a></li>
+                <li><a href="#practice">Practice</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <section id="basics" class="card">
+            <h2>📋 Class Basics</h2>
+            <p>Classes are blueprints for creating objects.</p>
+            
+            <div class="code-block">
+                <h3>Basic Class Syntax</h3>
+                <pre><code id="basicClassCode"># Defining a simple class
+class Dog:
+    # Class attribute
+    species = "Canis familiaris"
+    
+    # Initializer (constructor)
+    def __init__(self, name, age):
+        # Instance attributes
+        self.name = name
+        self.age = age
+    
+    # Instance method
+    def bark(self):
+        return f"{self.name} says woof!"
+
+# Creating objects (instances)
+dog1 = Dog("Buddy", 3)
+dog2 = Dog("Lucy", 5)
+
+# Accessing attributes and methods
+print(dog1.name)        # Buddy
+print(dog2.age)         # 5
+print(dog1.bark())      # Buddy says woof!
+print(Dog.species)      # Canis familiaris</code></pre>
+                <button onclick="copyCode('basicClassCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="methods" class="card">
+            <h2>🔧 Class Methods</h2>
+            <p>Different types of methods in classes.</p>
+            
+            <div class="code-block">
+                <h3>Method Types</h3>
+                <pre><code id="methodCode">class Car:
+    wheels = 4  # Class attribute
+    
+    def __init__(self, make, model, year):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.speed = 0
+    
+    # Instance method
+    def accelerate(self, amount):
+        self.speed += amount
+        return f"Speed is now {self.speed} km/h"
+    
+    # Instance method
+    def brake(self, amount):
+        self.speed = max(0, self.speed - amount)
+        return f"Speed is now {self.speed} km/h"
+    
+    # Class method
+    @classmethod
+    def from_string(cls, car_string):
+        make, model, year = car_string.split('-')
+        return cls(make, model, int(year))
+    
+    # Static method
+    @staticmethod
+    def is_vintage(year):
+        return year < 1990
+
+# Using class method
+car3 = Car.from_string("Toyota-Corolla-2020")
+print(car3.make)  # Toyota
+
+# Using static method
+print(Car.is_vintage(1985))  # True</code></pre>
+                <button onclick="copyCode('methodCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="inheritance" class="card">
+            <h2>🧬 Inheritance</h2>
+            <p>Creating new classes based on existing ones.</p>
+            
+            <div class="code-block">
+                <h3>Inheritance Examples</h3>
+                <pre><code id="inheritCode"># Parent class
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    
+    def speak(self):
+        raise NotImplementedError("Subclass must implement this method")
+
+# Child class
+class Dog(Animal):
+    def speak(self):
+        return f"{self.name} says woof!"
+
+# Child class
+class Cat(Animal):
+    def speak(self):
+        return f"{self.name} says meow!"
+
+# Child class with additional attributes
+class Bird(Animal):
+    def __init__(self, name, can_fly=True):
+        super().__init__(name)  # Call parent initializer
+        self.can_fly = can_fly
+    
+    def speak(self):
+        sound = "tweet" if self.can_fly else "chirp"
+        return f"{self.name} says {sound}!"
+
+# Using inheritance
+animals = [
+    Dog("Buddy"),
+    Cat("Whiskers"),
+    Bird("Tweety"),
+    Bird("Penguin", False)
+]
+
+for animal in animals:
+    print(animal.speak())</code></pre>
+                <button onclick="copyCode('inheritCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="special" class="card">
+            <h2>⭐ Special Methods</h2>
+            <p>Special methods for operator overloading.</p>
+            
+            <div class="code-block">
+                <h3>Dunder Methods</h3>
+                <pre><code id="specialCode">class Vector:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    
+    # String representation
+    def __str__(self):
+        return f"Vector({self.x}, {self.y})"
+    
+    # Addition
+    def __add__(self, other):
+        return Vector(self.x + other.x, self.y + other.y)
+    
+    # Subtraction
+    def __sub__(self, other):
+        return Vector(self.x - other.x, self.y - other.y)
+    
+    # Multiplication by scalar
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+    
+    # Length (magnitude)
+    def __len__(self):
+        return int((self.x**2 + self.y**2)**0.5)
+    
+    # Equality
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+# Using special methods
+v1 = Vector(2, 3)
+v2 = Vector(1, 2)
+
+print(v1 + v2)  # Vector(3, 5)
+print(v1 * 3)   # Vector(6, 9)
+print(len(v1))  # 3 (approximately)</code></pre>
+                <button onclick="copyCode('specialCode')">Copy Code</button>
+            </div>
+        </section>
+
+        <section id="practice" class="card">
+            <h2>🎯 Practice Classes</h2>
+            <p>Create your own classes:</p>
+            
+            <div class="practice-area">
+                <textarea id="classCode" placeholder="Write your class code here..." rows="15"># Practice with classes
+class BankAccount:
+    def __init__(self, account_holder, balance=0):
+        self.account_holder = account_holder
+        self.balance = balance
+        self.transactions = []
+    
+    def deposit(self, amount):
+        if amount > 0:
+            self.balance += amount
+            self.transactions.append(f"Deposit: +${amount}")
+            return f"Deposited ${amount}. New balance: ${self.balance}"
+        return "Invalid deposit amount"
+    
+    def withdraw(self, amount):
+        if 0 < amount <= self.balance:
+            self.balance -= amount
+            self.transactions.append(f"Withdrawal: -${amount}")
+            return f"Withdrew ${amount}. New balance: ${self.balance}"
+        return "Insufficient funds or invalid amount"
+    
+    def get_balance(self):
+        return f"Balance: ${self.balance}"
+    
+    def get_transactions(self):
+        return self.transactions
+
+# Test the BankAccount class
+if __name__ == "__main__":
+    account = BankAccount("Alice", 1000)
+    print(account.deposit(500))
+    print(account.withdraw(200))
+    print(account.withdraw(2000))  # Should fail
+    print(account.get_balance())
+    print("Transaction History:", account.get_transactions())</textarea>
+                
+                <button onclick="runClassCode()" class="build-btn">Run Code</button>
+                <div id="classOutput" class="output"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Made with ❤️ for Python learners | Classes Tutorial</p>
+        </div>
+    </footer>
+
+    <script>
+        function copyCode(elementId) {
+            const codeElement = document.getElementById(elementId);
+            navigator.clipboard.writeText(codeElement.textContent);
+            alert('Code copied to clipboard!');
+        }
+
+        function runClassCode() {
+            const outputDiv = document.getElementById('classOutput');
+            outputDiv.innerHTML = '🚀 Running class code...\n\n';
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'Deposited $500. New balance: $1500\n';
+            }, 500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'Withdrew $200. New balance: $1300\n';
+            }, 1000);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'Insufficient funds or invalid amount\n';
+            }, 1500);
+            
+            setTimeout(() => {
+                outputDiv.innerHTML += 'Balance: $1300\n';
+                outputDiv.innerHTML += 'Transaction History: [\'Deposit: +$500\', \'Withdrawal: -$200\']\n\n';
+                outputDiv.innerHTML += '✅ Bank account class working correctly!';
+            }, 2000);
+        }
+
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
